@@ -38,7 +38,7 @@ set "baseRunnerDownloadUrl=https://github.com/valthrunner/Valthrun/releases/late
 ::Download
 echo.
 echo   Downloading necessary files...
-call :downloadFileWithFallback "%baseDownloadUrl%controller.exe" "%baseRunnerDownloadUrl%controller.exe" "controller.exe"
+call :downloadFileWithFallback "%baseDownloadUrl%controller.exe" "%baseRunerDownloadUrl%controller.exe" "Oi"
 call :downloadFile "%baseDownloadUrl%valthrun-driver.sys" "valthrun-driver.sys"
 call :downloadFile "%baseRunnerDownloadUrl%kdmapper.exe" "kdmapper.exe"
 :: Handle radar version
