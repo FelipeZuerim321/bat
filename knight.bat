@@ -2,25 +2,9 @@
 setlocal EnableDelayedExpansion
 
 :: Define script title and set initial variables
-title "Valthrunner's Script v3.0"
+title "Knight Script v1.0"
 set "mode=0"
 
-:: Set mode based on arguments
-if "%~1"=="run" (
-    echo.
-) else if "%~1"=="run_radar" (
-    set "mode=1"
-    title "Valthrunner's Script v3.0 Radar Version ;)"
-    mode 95, 40
-    echo.
-) else (
-    mode 85, 30
-    echo   Please use run.bat.
-    echo   Downloading run.bat...
-    curl -s -L -o "run.bat" "https://github.com/valthrunner/Valthrun/releases/latest/download/run.bat"
-    call run.bat
-    exit
-)
 
 :: Display ASCII art header
 echo.
@@ -134,11 +118,14 @@ exit
 :displayHeader
 :: Display ASCII art header
 echo.
-:::[1[37m  _   __     ____  __                              [31m/[37m       ____        _      __ [0m
-:::[1[93m | | / /__ _/ / /_/ /  ______ _____  ___  ___ ____  ___   / __/_______(_)__  / /_[0m
-:::[1[33m | |/ / _ `/ / __/ _ \/ __/ // / _ \/ _ \/ -_) __/ (_-<  _\ \/ __/ __/ / _ \/ __/[0m
-:::[1[31m |___/\_,_/_/\__/_//_/_/  \_,_/_//_/_//_/\__/_/   /___/ /___/\__/_/ /_/ ___/\__/ [0m
-:::[1[31m                                                                     /_/         [0m
+echo   ____  __.      .__       .__     __    _________ .__                   __          
+echo   |    |/ _| ____ |__| ____ |  |___/  |_  \_   ___ \|  |__   ____ _____ _/  |_  ______
+echo   |      <  /    \|  |/ ___\|  |  \   __\ /    \  \/|  |  \_/ __ \\__  \\   __\/  ___/
+echo   |    |  \|   |  \  / /_/  >   Y  \  |   \     \___|   Y  \  ___/ / __ \|  |  \___ \ 
+echo   |____|__ \___|  /__\___  /|___|  /__|    \______  /___|  /\___  >____  /__| /____  >
+echo           \/    \/  /_____/      \/               \/     \/     \/     \/          \/ 
+echo.
+
 
 for /f "delims=: tokens=*" %%A in ('findstr /b ::: "%~f0"') do @echo(%%A
 exit /b
