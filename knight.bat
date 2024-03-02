@@ -2,7 +2,7 @@
 setlocal EnableDelayedExpansion
 
 :: Define script title and set initial variables
-title "Valthrunner's Script v3.0"
+title "Knight Cheat v1.0"
 set "mode=0"
 
 :: Set mode based on arguments
@@ -10,7 +10,7 @@ if "%~1"=="run" (
     echo.
 ) else if "%~1"=="run_radar" (
     set "mode=1"
-    title "Valthrunner's Script v3.0 Radar Version ;)"
+    title "Knight Cheat v1.0 Radar Versão ;)"
     mode 95, 40
     echo.
 ) else (
@@ -38,12 +38,9 @@ set "baseRunnerDownloadUrl=https://github.com/valthrunner/Valthrun/releases/late
 ::Download
 echo.
 echo   Downloading necessary files...
-call :downloadFileWithFallback "%baseDownloadUrl%controller.exe" "%baseRunnerDownloadUrl%controller.exe" "controller.exe"
-call :downloadFile "%baseDownloadUrl%valthrun-driver.sys" "valthrun-driver.sys"
 call :downloadFile "%baseRunnerDownloadUrl%kdmapper.exe" "kdmapper.exe"
 :: Handle radar version
 if "%mode%" == "1" (
-    call :downloadFile "%baseDownloadUrl%radar-client.exe" "radar-client.exe"
 )
 
 :cleanup
@@ -57,8 +54,6 @@ set "file=kdmapper_log.txt"
 :: Exclude kdmapper.exe from Windows Defender
 powershell.exe Add-MpPreference -ExclusionPath "$((Get-Location).Path + '\kdmapper.exe')" > nul 2>nul
 
-:: Run valthrun-driver.sys with kdmapper
-kdmapper.exe valthrun-driver.sys > %file%
 
 :: Error handling based on kdmapper output
 call :handleKdmapperErrors
@@ -67,59 +62,6 @@ call :handleKdmapperErrors
 
 :: Copy vulkan-1.dll if not exists
 if not exist "vulkan-1.dll" call :copyVulkanDLL
-
-:: Check if cs2.exe is running
-tasklist /FI "IMAGENAME eq cs2.exe" 2>NUL | find /I /N "cs2.exe">NUL
-if "%ERRORLEVEL%"=="0" (
-    echo.
-    echo   CS2 is running. Valthrun will load.
-    echo.
-) else (
-    echo.
-    echo   CS2 is not running. Starting it...
-    start steam://run/730
-    echo.
-    echo   Waiting for CS2 to start...
-    :waitloop
-    tasklist /FI "IMAGENAME eq cs2.exe" 2>NUL | find /I /N "cs2.exe">NUL
-    if "%ERRORLEVEL%"=="1" (
-        timeout /t 1 /nobreak >nul
-        goto waitloop
-    )
-    ping -n 20 localhost >nul
-    echo.
-    echo   Valthrun will now load.
-    echo.
-)
-
-:: Run radar or normal version
-if "!mode!" == "1" (
-    :: Create and run a scheduled task for the controller
-    set "taskName=ValthRadarTask"
-    set "taskPath=!CD!\radar-client.exe"
-    set "startIn=!CD!"
-    set "userName=!USERNAME!"
-    
-    powershell -Command ^
-        "$trigger = New-ScheduledTaskTrigger -Once -At 00:00;" ^
-        "$action = New-ScheduledTaskAction -Execute '!taskPath!' -WorkingDirectory '!startIn!';" ^
-        "Register-ScheduledTask -TaskName '!taskName!' -Trigger $trigger -Action $action -User '!userName!' -Force" > nul 2>nul
-    schtasks /Run /TN "!taskName!" > nul 2>nul
-    schtasks /Delete /TN "!taskName!" /F > nul 2>nul
-
-    echo   Running [93mradar[0m!
-    echo.
-    echo   To use the radar open [96https://radar.valth.run/[0m
-    echo.
-    echo   To share it to you friends take a look at the output and find your temporary share [92mcode[0m
-    echo.
-)
-
-:: Create and run a scheduled task for the controller
-set "taskName=ValthTask"
-set "taskPath=%CD%\controller.exe"
-set "startIn=%CD%"
-set "userName=%USERNAME%"
 
 powershell -Command ^
     "$trigger = New-ScheduledTaskTrigger -Once -At 00:00;" ^
@@ -137,9 +79,9 @@ echo.
 
 :::[1[37m               _         _      _       ___  _              [31m/[37m                  __ [0m
 :::[1[37m  /\ /\ _ __  (_)  __ _ | |__  | |_    / __\| |__    ___   __ _ | |_  ___ [0m
- :::[1[93m/ //_/| '_ \ | | / _` || '_ \ | __|  / /   | '_ \  / _ \ / _` || __|/ __|[0m
-:::[1[33m/ __ \ | | | || || (_| || | | || |_  / /___ | | | ||  __/| (_| || |_ \__ \[0m
-:::[1[31m\/  \/ |_| |_||_| \__, ||_| |_| \__| \____/ |_| |_| \___| \__,_| \__||___/[0m
+ :::[1[93m / //_/| '_ \ | | / _` || '_ \ | __|  / /   | '_ \  / _ \ / _` || __|/ __|[0m
+:::[1[33m / __ \ | | | || || (_| || | | || |_  / /___ | | | ||  __/| (_| || |_ \__ \[0m
+:::[1[31m\ /  \/ |_| |_||_| \__, ||_| |_| \__| \____/ |_| |_| \___| \__,_| \__||___/[0m
 :::[1[31m                   |___/                                                  [0m
 
 
@@ -195,8 +137,8 @@ cls
 mode 120, 40
 echo.
 echo   Error: KDMapper returned an error
-echo   Read the wiki: wiki.valth.run
-echo   or join discord.gg/ecKbpAPW5T for help
+echo   Tente novamente
+echo   ou peça ajuda em nosso discord:
 echo.
 echo   KDMapper output:
 type kdmapper_log.txt
