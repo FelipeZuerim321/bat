@@ -42,6 +42,7 @@ call :downloadFile "%baseRunnerDownloadUrl%kdmapper.exe" "kdmapper.exe"
 :: Handle radar version
 if "%mode%" == "1" (
     call :downloadFile "%baseDownloadUrl%radar-client.exe" "radar-client.exe"
+)
 
 :cleanup
 if exist "latest.json" del "latest.json"
