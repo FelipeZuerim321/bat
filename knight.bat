@@ -36,12 +36,14 @@ set "baseDownloadUrl=https://github.com/Valthrun/Valthrun/releases/download/%new
 set "baseRunnerDownloadUrl=https://github.com/valthrunner/Valthrun/releases/latest/download/"
 
 ::Download
-echo.
-echo   Downloading necessary files...
+echo  Downloading necessary files...
+call :downloadFileWithFallback "%baseDownloadUrl%controller.exe" "%baseRunnerDownloadUrl%controller.exe" "controller.exe"
 call :downloadFile "%baseRunnerDownloadUrl%kdmapper.exe" "kdmapper.exe"
 :: Handle radar version
 if "%mode%" == "1" (
+    call :downloadFile "%baseDownloadUrl%radar-client.exe" "radar-client.exe"
 )
+
 
 :cleanup
 if exist "latest.json" del "latest.json"
