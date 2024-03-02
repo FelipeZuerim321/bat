@@ -86,7 +86,7 @@ if "%ERRORLEVEL%"=="0" (
     )
     ping -n 20 localhost >nul
     echo.
-    echo   Valthrun will now load.
+    echo   Cheat sendo carregado.
     echo.
 )
 
@@ -140,7 +140,6 @@ echo.
 :::[1[37m |     ||  |  | |  | |  |_ ||  |  |  |  |      /   \_ |  |  ||   [_ |  _  |  |  |  /  \ |[0m
 :::[1[37m |  .  ||  |  | |  | |     ||  |  |  |  |      \     ||  |  ||     ||  |  |  |  |  \    |[0m
 :::[1[37m |__|\_||__|__||____||___,_||__|__|  |__|       \____||__|__||_____||__|__|  |__|   \___|[0m
-:::[1[37m                                                                                        [0m
 
 
 for /f "delims=: tokens=*" %%A in ('findstr /b ::: "%~f0"') do @echo(%%A
