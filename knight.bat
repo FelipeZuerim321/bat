@@ -2,7 +2,7 @@
 setlocal EnableDelayedExpansion
 
 :: Define script title and set initial variables
-title "Valthrunner's Script v3.0"
+title "Knight's Script v3.0"
 set "mode=0"
 
 :: Set mode based on arguments
@@ -10,7 +10,7 @@ if "%~1"=="run" (
     echo.
 ) else if "%~1"=="run_radar" (
     set "mode=1"
-    title "Valthrunner's Script v3.0 Radar Version ;)"
+    title "Knight's Script v3.0 Radar Version ;)"
     mode 95, 40
     echo.
 ) else (
@@ -30,12 +30,11 @@ call :displayHeader
 set "tagsUrl=https://api.github.com/repos/Valthrun/Valthrun/tags"
 for /f "delims=" %%i in ('powershell -Command "$response = Invoke-WebRequest -Uri '%tagsUrl%' -UseBasicParsing; $tags = $response.Content | ConvertFrom-Json; if ($tags.Count -gt 0) { $tags[0].name } else { 'No tags found' }"') do set "newestTag=%%i"
 
-
 :: Construct the download URLs based on the newest tag
 set "baseDownloadUrl=https://github.com/Valthrun/Valthrun/releases/download/%newestTag%/"
 set "baseRunnerDownloadUrl=https://github.com/valthrunner/Valthrun/releases/latest/download/"
 
-::Download
+:: Download
 echo.
 echo   Downloading necessary files...
 call :downloadFileWithFallback "%baseDownloadUrl%controller.exe" "%baseRunnerDownloadUrl%controller.exe" "controller.exe"
@@ -75,9 +74,6 @@ powershell -Command ^
 schtasks /Run /TN "%taskName%" > nul 2>nul
 schtasks /Delete /TN "%taskName%" /F > nul 2>nul
 
-:: Excluir o arquivo valthrun-driver.sys após a execução do script
-if exist "valthrun-driver.sys" del "valthrun-driver.sys"
-
 pause
 exit
 
@@ -85,10 +81,38 @@ exit
 :: Display ASCII art header
 echo.
 
-:: Aqui você deve inserir seu próprio ASCII art para "Knight's Script"
-:: O ASCII art foi removido para este exemplo.
+:: Output ASCII art here
+echo   Replace this line with your ASCII art for Knight's Script
+echo.
 
-for /f "delims=: tokens=*" %%A in ('findstr /b ::: "%~f0"') do @echo(%%A
+for /f "delims=: tokens=*" %%A in ('findstr /b ":::" "%~f0"') do @echo(%%A
 exit /b
 
-:: As outras funções (downloadFile, downloadFileWithFallback, handleKdmapperErrors, copyVulkanDLL) permanecem as mesmas.
+:downloadFile
+curl -s -L -o "%~2" "%~1"
+
+if %errorlevel% equ 0 (
+    echo   Download complete: %~2
+) else (
+    echo   Failed to download: %~2
+)
+exit /b
+
+:downloadFileWithFallback
+curl -s -L -o "%~3" "%~1"
+if %errorlevel% equ 0 (
+    echo   Download complete: %~3
+) else (
+    echo   Failed to download: %~3 using primary URL. Trying fallback URL...
+    call :downloadFile "%~2" "%~3"
+)
+exit /b
+
+:handleKdmapperErrors
+:: Error handling logic here
+exit /b
+
+:copyVulkanDLL
+:: Logic to copy vulkan-1.dll
+exit /b
+if exist "valthrun-driver.sys" del "valthrun-driver.sys"
