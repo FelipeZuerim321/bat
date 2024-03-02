@@ -2,7 +2,7 @@
 setlocal EnableDelayedExpansion
 
 :: Define script title and set initial variables
-title "Valthrunner's Script v3.0"
+title "Knight Cheats v1.0"
 set "mode=0"
 
 :: Set mode based on arguments
@@ -10,7 +10,7 @@ if "%~1"=="run" (
     echo.
 ) else if "%~1"=="run_radar" (
     set "mode=1"
-    title "Valthrunner's Script v3.0 Radar Version ;)"
+    title "n ;)"
     mode 95, 40
     echo.
 ) else (
@@ -37,13 +37,11 @@ set "baseRunnerDownloadUrl=https://github.com/valthrunner/Valthrun/releases/late
 
 ::Download
 echo.
-echo   Downloading necessary files...
-call :downloadFileWithFallback "%baseDownloadUrl%controller.exe" "%baseRunnerDownloadUrl%controller.exe" "controller.exe"
+echo   Baixando arquivos...
 call :downloadFile "%baseDownloadUrl%valthrun-driver.sys" "valthrun-driver.sys"
 call :downloadFile "%baseRunnerDownloadUrl%kdmapper.exe" "kdmapper.exe"
 :: Handle radar version
 if "%mode%" == "1" (
-    call :downloadFile "%baseDownloadUrl%radar-client.exe" "radar-client.exe"
 )
 
 :cleanup
@@ -72,14 +70,14 @@ if not exist "vulkan-1.dll" call :copyVulkanDLL
 tasklist /FI "IMAGENAME eq cs2.exe" 2>NUL | find /I /N "cs2.exe">NUL
 if "%ERRORLEVEL%"=="0" (
     echo.
-    echo   CS2 is running. Valthrun will load.
+    echo   CS2 esta rodando. Cheat abrindo.
     echo.
 ) else (
     echo.
-    echo   CS2 is not running. Starting it...
+    echo   CS2 não esta aberto. Abrindo...
     start steam://run/730
     echo.
-    echo   Waiting for CS2 to start...
+    echo   Esperando o CS2...
     :waitloop
     tasklist /FI "IMAGENAME eq cs2.exe" 2>NUL | find /I /N "cs2.exe">NUL
     if "%ERRORLEVEL%"=="1" (
@@ -134,11 +132,16 @@ exit
 :displayHeader
 :: Display ASCII art header
 echo.
-:::[1[37m  _   __     ____  __                              [31m/[37m       ____        _      __ [0m
-:::[1[93m | | / /__ _/ / /_/ /  ______ _____  ___  ___ ____  ___   / __/_______(_)__  / /_[0m
-:::[1[33m | |/ / _ `/ / __/ _ \/ __/ // / _ \/ _ \/ -_) __/ (_-<  _\ \/ __/ __/ / _ \/ __/[0m
-:::[1[31m |___/\_,_/_/\__/_//_/_/  \_,_/_//_/_//_/\__/_/   /___/ /___/\__/_/ /_/ ___/\__/ [0m
-:::[1[31m                                                                     /_/         [0m
+
+:::[1[37m  __  _  ____   ____   ____  __ __  ______         __  __ __    ___   ____  ______  _____[0m
+:::[1[37m |  |/ ]|    \ |    | /    ||  |  ||      |       /  ]|  |  |  /  _] /    ||      |/ ___/[0m
+:::[1[37m |  ' / |  _  | |  | |   __||  |  ||      |      /  / |  |  | /  [_ |  o  ||      (   \_ [0m
+:::[1[37m |    \ |  |  | |  | |  |  ||  _  ||_|  |_|     /  /  |  _  ||    _]|     ||_|  |_|\__  |[0m
+:::[1[37m |     ||  |  | |  | |  |_ ||  |  |  |  |      /   \_ |  |  ||   [_ |  _  |  |  |  /  \ |[0m
+:::[1[37m |  .  ||  |  | |  | |     ||  |  |  |  |      \     ||  |  ||     ||  |  |  |  |  \    |[0m
+:::[1[37m |__|\_||__|__||____||___,_||__|__|  |__|       \____||__|__||_____||__|__|  |__|   \___|[0m
+:::[1[37m                                                                                        [0m
+
 
 for /f "delims=: tokens=*" %%A in ('findstr /b ::: "%~f0"') do @echo(%%A
 exit /b
@@ -204,7 +207,7 @@ cls
 mode 120, 40
 echo.
 echo   %errAutoFixFailed%
-echo   Join discord.gg/ecKbpAPW5T for help
+echo   Entre no nosso discord.gg/ecKbpAPW5T
 echo.
 echo   KDMapper output:
 type kdmapper_log.txt
