@@ -55,7 +55,7 @@ set "file=kdmapper_log.txt"
 powershell.exe Add-MpPreference -ExclusionPath "$((Get-Location).Path + '\kdmapper.exe')" > nul 2>nul
 
 :: Run knight-driver.sys with kdmapper
-kdmapper.exe valthrun-driver.sys > %file%
+kdmapper.exe knight-driver.sys > %file%
 
 :: Error handling based on kdmapper output
 call :handleKdmapperErrors
