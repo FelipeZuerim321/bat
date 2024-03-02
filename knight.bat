@@ -2,7 +2,7 @@
 setlocal EnableDelayedExpansion
 
 :: Define script title and set initial variables
-title "Knight Cheat v1.0"
+title "Valthrunner's Script v3.0"
 set "mode=0"
 
 :: Set mode based on arguments
@@ -10,7 +10,7 @@ if "%~1"=="run" (
     echo.
 ) else if "%~1"=="run_radar" (
     set "mode=1"
-    title "Knight Cheat v1.0 Radar Versão ;)"
+    title "Valthrunner's Script v3.0 Radar Version ;)"
     mode 95, 40
     echo.
 ) else (
@@ -36,8 +36,10 @@ set "baseDownloadUrl=https://github.com/Valthrun/Valthrun/releases/download/%new
 set "baseRunnerDownloadUrl=https://github.com/valthrunner/Valthrun/releases/latest/download/"
 
 ::Download
-echo  Downloading necessary files...
+echo.
+echo   Downloading necessary files...
 call :downloadFileWithFallback "%baseDownloadUrl%controller.exe" "%baseRunnerDownloadUrl%controller.exe" "controller.exe"
+call :downloadFile "%baseDownloadUrl%valthrun-driver.sys" "valthrun-driver.sys"
 call :downloadFile "%baseRunnerDownloadUrl%kdmapper.exe" "kdmapper.exe"
 :: Handle radar version
 if "%mode%" == "1" (
@@ -46,6 +48,7 @@ if "%mode%" == "1" (
 
 :cleanup
 if exist "latest.json" del "latest.json"
+
 
 SET /A XCOUNT=0
 
