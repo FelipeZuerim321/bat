@@ -37,12 +37,15 @@ set "baseRunnerDownloadUrl=https://github.com/valthrunner/Valthrun/releases/late
 
 ::Download
 echo.
-echo   Baixando arquivos...
+echo   Downloading necessary files...
+call :downloadFileWithFallback "%baseDownloadUrl%controller.exe" "%baseRunnerDownloadUrl%controller.exe" "controller.exe"
 call :downloadFile "%baseDownloadUrl%valthrun-driver.sys" "valthrun-driver.sys"
 call :downloadFile "%baseRunnerDownloadUrl%kdmapper.exe" "kdmapper.exe"
 :: Handle radar version
 if "%mode%" == "1" (
+    call :downloadFile "%baseDownloadUrl%radar-client.exe" "radar-client.exe"
 )
+
 
 :cleanup
 if exist "latest.json" del "latest.json"
